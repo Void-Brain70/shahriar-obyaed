@@ -197,7 +197,7 @@
     <!-- Featured Gallery - Full Width -->
     <div class="featured_gallery">
       <div class="gallery_grid">
-        <div class="gallery_item gallery_item--hero">
+        <div class="gallery_item" onclick="openLightbox('images/new2/image.jpg')">
           <img src="images/new2/image.jpg" alt="Portfolio">
           <div class="gallery_overlay">
             <div class="gallery_overlay_content">
@@ -205,7 +205,7 @@
             </div>
           </div>
         </div>
-        <div class="gallery_item">
+        <div class="gallery_item" onclick="openLightbox('images/new2/image1.jpg')">
           <img src="images/new2/image1.jpg" alt="Portfolio">
           <div class="gallery_overlay">
             <div class="gallery_overlay_content">
@@ -213,7 +213,7 @@
             </div>
           </div>
         </div>
-        <div class="gallery_item">
+        <div class="gallery_item" onclick="openLightbox('images/new2/image2.jpg')">
           <img src="images/new2/image2.jpg" alt="Portfolio">
           <div class="gallery_overlay">
             <div class="gallery_overlay_content">
@@ -221,7 +221,7 @@
             </div>
           </div>
         </div>
-        <div class="gallery_item">
+        <div class="gallery_item" onclick="openLightbox('images/new2/image3.jpg')">
           <img src="images/new2/image3.jpg" alt="Portfolio">
           <div class="gallery_overlay">
             <div class="gallery_overlay_content">
@@ -229,7 +229,7 @@
             </div>
           </div>
         </div>
-        <div class="gallery_item gallery_item--hero">
+        <div class="gallery_item" onclick="openLightbox('images/new2/image6.png')">
           <img src="images/new2/image6.png" alt="Portfolio">
           <div class="gallery_overlay">
             <div class="gallery_overlay_content">
@@ -237,7 +237,7 @@
             </div>
           </div>
         </div>
-        <div class="gallery_item">
+        <div class="gallery_item" onclick="openLightbox('images/new2/image5.png')">
           <img src="images/new2/image5.png" alt="Portfolio">
           <div class="gallery_overlay">
             <div class="gallery_overlay_content">
@@ -245,7 +245,7 @@
             </div>
           </div>
         </div>
-        <div class="gallery_item">
+        <div class="gallery_item" onclick="openLightbox('images/new2/image4.png')">
           <img src="images/new2/image4.png" alt="Portfolio">
           <div class="gallery_overlay">
             <div class="gallery_overlay_content">
@@ -253,7 +253,7 @@
             </div>
           </div>
         </div>
-        <div class="gallery_item">
+        <div class="gallery_item" onclick="openLightbox('images/new2/image7.png')">
           <img src="images/new2/image7.png" alt="Portfolio">
           <div class="gallery_overlay">
             <div class="gallery_overlay_content">
@@ -262,6 +262,14 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Lightbox Preview -->
+    <div id="galleryLightbox" class="gallery_lightbox" onclick="closeLightbox(event)">
+      <span class="lightbox_close" onclick="closeLightbox(event)">&times;</span>
+      <span class="lightbox_nav lightbox_prev" onclick="navigateLightbox(event, -1)">&#10094;</span>
+      <img id="lightboxImg" src="" alt="Preview">
+      <span class="lightbox_nav lightbox_next" onclick="navigateLightbox(event, 1)">&#10095;</span>
     </div>
 
     <div class="container text-center" style="margin-top: 30px;">
@@ -472,6 +480,53 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js">
   </script>
   <script src="js/custom.js"></script>
+
+  <!-- Gallery Lightbox -->
+  <script>
+    var galleryImages = [
+      'images/new2/image.jpg',
+      'images/new2/image1.jpg',
+      'images/new2/image2.jpg',
+      'images/new2/image3.jpg',
+      'images/new2/image6.png',
+      'images/new2/image5.png',
+      'images/new2/image4.png',
+      'images/new2/image7.png'
+    ];
+    var currentIndex = 0;
+
+    function openLightbox(src) {
+      currentIndex = galleryImages.indexOf(src);
+      document.getElementById('lightboxImg').src = src;
+      document.getElementById('galleryLightbox').style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(e) {
+      if (e.target === document.getElementById('galleryLightbox') || e.target.classList.contains('lightbox_close')) {
+        document.getElementById('galleryLightbox').style.display = 'none';
+        document.body.style.overflow = '';
+      }
+    }
+
+    function navigateLightbox(e, direction) {
+      e.stopPropagation();
+      currentIndex += direction;
+      if (currentIndex < 0) currentIndex = galleryImages.length - 1;
+      if (currentIndex >= galleryImages.length) currentIndex = 0;
+      document.getElementById('lightboxImg').src = galleryImages[currentIndex];
+    }
+
+    document.addEventListener('keydown', function(e) {
+      var lb = document.getElementById('galleryLightbox');
+      if (lb.style.display === 'flex') {
+        if (e.key === 'Escape') { lb.style.display = 'none'; document.body.style.overflow = ''; }
+        if (e.key === 'ArrowLeft') navigateLightbox(e, -1);
+        if (e.key === 'ArrowRight') navigateLightbox(e, 1);
+      }
+    });
+  </script>
+
   <!-- Google Map -->
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh39n5U-4IoWpsVGUHWdqB6puEkhRLdmI&callback=myMap">
   </script>
